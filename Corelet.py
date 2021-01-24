@@ -22,7 +22,7 @@ pygame.init()
 Loop = True
 Logo = pygame.image.load("Logo.png")
 clock = pygame.time.Clock()
-Display = pygame.display.set_mode((500, 675))
+Display = pygame.display.set_mode((475, 575))
 pygame.display.set_caption("Corelet")
 pygame.display.set_icon(Logo)
 
