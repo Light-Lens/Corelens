@@ -1,9 +1,14 @@
 # All these imports are important for Engine
+from colorama import Fore, Back, Style
+from colorama import init
 import time
 import sys
 import os
 
 import LOG
+
+# Initializing Corelet ENGINE
+init(autoreset = True)
 
 # Global variables
 Is_virus = []
@@ -29,12 +34,13 @@ def System_scan():
 	for Files in Content:
 		for items in Is_virus:
 			if items in Files:
-				LOG.CORELET_ERROR_LOG(f"Virus found, {Files}")
 				if os.path.isfile(Files) == True:
+					LOG.CORELET_ERROR_LOG(f"Virus found, removed {Files}")
 					os.remove(Files)
 
 	os.chdir(RootDir)
 	LOG.CORELET_LOG(f"{WinDir}\\Users\\{Username} scanned successfully.")
+	LOG.CORELET_LOG(Fore.GREEN + "Your System is safe!\n")
 
 def Custom_scan(CustomFilePath):
 	pass

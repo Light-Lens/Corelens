@@ -3,6 +3,7 @@
 from colorama import Fore, Back, Style
 from colorama import init
 import time
+import json
 import sys
 import os
 
@@ -43,8 +44,15 @@ pygame.display.set_icon(Logo)
 os.system('title Corelet')
 LOG.CORELET_LOG(Fore.GREEN + "Corelet")
 LOG.CORELET_LOG(Fore.GREEN + f"Your Windows installtion drive \"{WinDir}\\\" has been detected for scan.")
-LOG.CORELET_LOG("RealTime Protection is activated.")
-RealTime_Protection()
+with open("PROPERTIES.json", "r") as READ:
+	Content = json.load(READ)
+	for Data in Content["PROPERTIES"]:
+		if Data["realtime_protection"] == True:
+			LOG.CORELET_LOG("RealTime Protection is activated.\n")
+			RealTime_Protection()
+
+		else:
+			LOG.CORELET_ERROR_LOG("RealTime Protection is disabled.\n")
 
 # Virus names
 Virus_names = "virus.exe", "exploit.application", "internet_explorer.exe", "fake_virus.bat"
@@ -57,8 +65,6 @@ def IsVirus(files):
 # Main Antivirus Loop
 Title = GUI.Label(Display, (25, 25, 25), 0, 0, 475, 70)
 Title_Text = GUI.Text(Display, "Corelet", (90, 90, 90), (160, 10), 50)
-
-Console = GUI.Label(Display, (25, 25, 25), 0, 620, 475, 30)
 
 SystemScan = GUI.Button(Display, (50, 50, 50), (70, 70, 70), (40, 40, 40), 30, 100, 120, 30)
 SystemScan_Info = GUI.Text(Display, f"Scan {WinDir} drive (Cannot scan other drives)", (0, 0, 0), (38, 140), 13)
@@ -80,9 +86,6 @@ while Loop:
 	Title.draw()
 	Title_Text.draw()
 
-	Console.draw()
-	GUI.Text(Display, f"CONSOLE:  {CONSOLE_DATA}", (255, 255, 255), (7, 627), 15).draw()
-
 	IsPressed['System_scan'] = SystemScan.draw()
 	SystemScan_Text.draw()
 	SystemScan_Info.draw()
@@ -91,7 +94,6 @@ while Loop:
 	Display.blit(Circle, (10, 109))
 	if IsPressed['System_scan'] == 1:
 		System_scan()
-		CONSOLE_DATA = f"Scanning {WinDir}\\Users\\{Username}"
 
 	IsPressed['Custom_scan'] = CustomScan.draw()
 	CustomScan_Text.draw()
@@ -100,8 +102,7 @@ while Loop:
 	CustomScan_Left_Border.draw()
 	Display.blit(Circle, (10, 209))
 	if IsPressed['Custom_scan'] == 1:
-		LOG.CORELET_LOG("Do a Custom scan")
-		CONSOLE_DATA = "Do a Custom scan"
+		LOG.CORELET_LOG("Do a Custom scan\n")
 
 	pygame.display.update()
 pygame.quit()

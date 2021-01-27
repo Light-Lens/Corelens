@@ -1,0 +1,9 @@
+{
+	"PROPERTIES" : [
+		{
+			"timer" : 0,
+			"realtime_protection" : true,
+			"start_realtime_protection_after_milliseconds" : 1000
+		}
+	]
+}
