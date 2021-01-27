@@ -1,5 +1,10 @@
-# Os module is important to use Command Prompt commands.
+# Modules are important for using LOG.
+from colorama import Fore, Back, Style
+from colorama import init
 import os
+
+# Initializing LOG
+init(autoreset = True)
 
 # It's a Log message function
 def CORELET_LOG(message):
