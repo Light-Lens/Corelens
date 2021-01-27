@@ -16,5 +16,5 @@ def CORELET_ERROR_LOG(message):
 
 # It's a Clear Log message function
 def CORELET_LOG_CLEAR():
-	HEXA_ENGINE_LOG(Fore.GREEN + "Hexa engine")
+	CORELET_LOG(Fore.GREEN + "Corelet")
 	os.system('cls')
