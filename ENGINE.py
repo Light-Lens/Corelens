@@ -15,6 +15,7 @@ Is_virus = []
 RootDir = sys.path[0]
 Username = os.environ['USERNAME']
 WinDir = os.environ['SYSTEMDRIVE']
+Userprofile = os.environ['USERPROFILE']
 
 def Listall_items():
 	with open("Listings.corelet", "r") as Lines:
@@ -27,9 +28,9 @@ Engine will have all features for Corelet (All features that an antivirus has).
 All features
 """
 def System_scan():
-	LOG.CORELET_LOG(f"Scanning {WinDir}\\Users\\{Username}")
+	LOG.CORELET_LOG(f"Scanning {Userprofile}")
 	Listall_items()
-	os.chdir(f"{WinDir}\\Users\\{Username}")
+	os.chdir(Userprofile)
 	Content = os.listdir()
 	for Files in Content:
 		for items in Is_virus:
@@ -39,11 +40,13 @@ def System_scan():
 					os.remove(Files)
 
 	os.chdir(RootDir)
-	LOG.CORELET_LOG(f"{WinDir}\\Users\\{Username} scanned successfully.")
+	LOG.CORELET_LOG(f"{Userprofile} scanned successfully.")
 	LOG.CORELET_LOG(Fore.GREEN + "Your System is safe!\n")
 
 def Custom_scan(CustomFilePath):
 	pass
 
-def RealTime_Protection():
-	System_scan()
+def RealTime_Protection(timer):
+	if timer == 3:
+		timer = 1
+		System_scan()

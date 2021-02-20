@@ -22,6 +22,7 @@ init(autoreset = True)
 pygame.init()
 
 # Global variables
+Count = 1
 Loop = True
 WinDir = os.environ['SYSTEMDRIVE']
 Username = os.environ['USERNAME']
@@ -47,12 +48,24 @@ LOG.CORELET_LOG(Fore.GREEN + f"Your Windows installtion drive \"{WinDir}\\\" has
 with open("PROPERTIES.json", "r") as READ:
 	Content = json.load(READ)
 	for Data in Content["PROPERTIES"]:
-		if Data["realtime_protection"] == True:
-			LOG.CORELET_LOG("RealTime Protection is activated.\n")
-			RealTime_Protection()
+		if Data["realtime_protection"] == True and Data["startup_protection"] == True:
+			LOG.CORELET_LOG("Startup Protection is enabled.")
+			LOG.CORELET_LOG("Realtime Protection is enabled.\n")
+			RealTime_Protection(Count)
 
-		else:
-			LOG.CORELET_ERROR_LOG("RealTime Protection is disabled.\n")
+		elif Data["realtime_protection"] == False and Data["startup_protection"] == False:
+			LOG.CORELET_ERROR_LOG("Startup Protection is disabled.")
+			LOG.CORELET_ERROR_LOG("Realtime Protection is disabled.\n")
+
+		elif Data["realtime_protection"] == False: LOG.CORELET_ERROR_LOG("Realtime Protection is disabled.\n")
+		elif Data["startup_protection"] == False: LOG.CORELET_ERROR_LOG("Startup Protection is disabled.\n")
+		elif Data["startup_protection"] == True:
+			LOG.CORELET_LOG("Startup Protection is enabled.\n")
+			RealTime_Protection(Count)
+
+		elif Data["realtime_protection"] == True:
+			LOG.CORELET_LOG("Realtime Protection is enabled.\n")
+			RealTime_Protection(Count)
 
 # Virus names
 Virus_names = "virus.exe", "exploit.application", "internet_explorer.exe", "fake_virus.bat"
